@@ -5,10 +5,9 @@ on:
       - master
 
 jobs:
-
   build:
     name: Build the Image
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    # if: github.event_name == 'push' && github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
@@ -24,26 +23,26 @@ jobs:
          docker tag student-tracker khadree12/student-tracker
          docker push khadree12/student-tracker
 
-  deploy_to_server:
-    runs-on: ubuntu-latest
-    needs: build # Wait for the first job to finish
+  # deploy_to_server:
+  #   runs-on: ubuntu-latest
+  #   needs: build # Wait for the first job to finish
 
-    steps:
-      - name: Deploy via SSH
-        uses: appleboy/ssh-action@v1
-        with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
+  #   steps:
+  #     - name: Deploy via SSH
+  #       uses: appleboy/ssh-action@v1
+  #       with:
+  #         host: ${{ secrets.SERVER_IP }}
+  #         username: ${{ secrets.SERVER_USER }}
+  #         key: ${{ secrets.SERVER_SSH_KEY }}
+  #         script: |
 
-            docker pull khadree12/student-tracker:latest
-            sudo docker stop student-progress-tracker || true && sudo docker rm student-progress-tracker || true
-            sudo docker run -d -p 8080:8080 --name student-progress-tracker \
-            -e VAULT_ADDR="${{ secrets.VAULT_ADDR }}" \
-            -e VAULT_ROLE_ID="${{ secrets.VAULT_ROLE_ID }}" \
-            -e VAULT_SECRET_ID="${{ secrets.VAULT_SECRET_ID }}" \
-            khadree12/student-tracker:latest
+  #           docker pull khadree12/student-tracker:latest
+  #           sudo docker stop student-progress-tracker || true && sudo docker rm student-progress-tracker || true
+  #           sudo docker run -d -p 8080:8080 --name student-progress-tracker \
+  #           -e VAULT_ADDR="${{ secrets.VAULT_ADDR }}" \
+  #           -e VAULT_ROLE_ID="${{ secrets.VAULT_ROLE_ID }}" \
+  #           -e VAULT_SECRET_ID="${{ secrets.VAULT_SECRET_ID }}" \
+  #           khadree12/student-tracker:latest
             
 
 
