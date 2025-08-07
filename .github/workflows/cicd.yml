@@ -38,7 +38,7 @@ jobs:
 
             docker pull khadree12/student-tracker:latest
             sudo docker stop student-progress-tracker || true && sudo docker rm student-progress-tracker || true
-            sudo docker run -d -p 8080:8080 --name student-progress-tracker \
+            sudo docker run -d -p 8000:8000 --name student-progress-tracker \
             -e VAULT_ADDR="${{ secrets.VAULT_ADDR }}" \
             -e VAULT_ROLE_ID="${{ secrets.VAULT_ROLE_ID }}" \
             -e VAULT_SECRET_ID="${{ secrets.VAULT_SECRET_ID }}" \
