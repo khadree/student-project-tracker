@@ -2,15 +2,10 @@ from fastapi import FastAPI, Request, Form
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from app.crud import create_student, get_student_progress, update_student_progress, count_students, get_all_students
-# added -  get_all_students (in line 4 above)
+
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
-
-#added - health check endpoint
-@app.get("/health")
-def health_check():
-    return {"status": "ok"}
 
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
