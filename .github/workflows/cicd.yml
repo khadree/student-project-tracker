@@ -36,7 +36,7 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
 
-            docker pull khadree12/student-tracker:latest
+            sudo docker pull khadree12/student-tracker:latest
             sudo docker stop student-progress-tracker || true && sudo docker rm student-progress-tracker || true
             sudo docker run -d -p 8000:8000 --name student-progress-tracker \
             -e VAULT_ADDR="${{ secrets.VAULT_ADDR }}" \
